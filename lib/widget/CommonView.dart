@@ -74,4 +74,13 @@ class CommonView {
               ))),
     );
   }
+
+  static Widget scrollView(Widget child) {
+    return CustomScrollView(physics: const BouncingScrollPhysics(), slivers: [
+      SliverFillRemaining(
+        hasScrollBody: false,
+        child: Center(child: child),
+      )
+    ]);
+  }
 }

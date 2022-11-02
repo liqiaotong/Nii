@@ -1,13 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:nii/module/UserManager.dart';
-import 'package:nii/page/Login.dart';
-import 'package:nii/page/Register.dart';
-import 'package:nii/utils/PageRouter.dart';
-import 'package:nii/widget/CommonView.dart';
 import '../common/Config.dart';
+import '../module/UserManager.dart';
+import '../utils/PageRouter.dart';
+import '../widget/CommonView.dart';
 import 'Home.dart';
+import 'Login.dart';
 
 class Startup extends StatefulWidget {
   const Startup({super.key});

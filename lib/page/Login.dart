@@ -1,9 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:nii/widget/CommonView.dart';
 
 import '../common/AColors.dart';
 import '../utils/PageRouter.dart';
+import '../widget/CommonView.dart';
 import 'Register.dart';
 
 class Login extends StatefulWidget {
@@ -23,7 +23,7 @@ class _LoginState extends State {
   }
 
   Widget loginView(BuildContext context) {
-    return Padding(
+    return CommonView.scrollView(Padding(
         padding: EdgeInsets.only(left: 30, right: 30, top: MediaQuery.of(context).padding.top),
         child: Column(children: [
           Expanded(
@@ -69,7 +69,7 @@ class _LoginState extends State {
                   ]))
                 ],
               ))
-        ]));
+        ])));
   }
 
   void _login() {
