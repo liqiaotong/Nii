@@ -14,7 +14,7 @@ class Register extends StatefulWidget {
 
 class _RegisterState extends State {
   TextEditingController nameController = TextEditingController();
-  TextEditingController phoneController = TextEditingController();
+  // TextEditingController phoneController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController rePasswordController = TextEditingController();
@@ -45,8 +45,8 @@ class _RegisterState extends State {
             CommonView.input(hintText: "Name", maxLength: 30, controller: nameController),
             const SizedBox(height: 20),
             CommonView.input(hintText: "Email", maxLength: 30, controller: emailController),
-            const SizedBox(height: 20),
-            CommonView.input(hintText: "Mobile Number", maxLength: 30, controller: phoneController),
+            // const SizedBox(height: 20),
+            // CommonView.input(hintText: "Mobile Number", maxLength: 30, controller: phoneController),
             const SizedBox(height: 20),
             CommonView.input(hintText: "Password", obscureText: true, maxLength: 30, controller: passwordController),
             const SizedBox(height: 20),
@@ -79,9 +79,10 @@ class _RegisterState extends State {
   }
 
   void _register() {
-    print("Name:${nameController.text}  Email:${emailController.text}  Mobile Number:${phoneController.text}  Password:${passwordController.text}  "
+    print("Name:${nameController.text}  Email:${emailController.text}  Password:${passwordController.text}  "
         "Re Password:${rePasswordController.text}");
   }
+
 
   void _turnToLogin() {
     Navigator.of(context).pop();

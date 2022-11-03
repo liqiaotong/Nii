@@ -1,6 +1,7 @@
 class User {
-  late String name;
-  late int id;
+  String? name;
+  String? email;
+  int id = 0;
 
   User.fromJson(Map<String, dynamic> json) : name = json['name'];
 
