@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../common/AColors.dart';
 
 class CommonView {
@@ -53,7 +54,10 @@ class CommonView {
     return Container(
       color: backgroundColor,
       child: Padding(
-          padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+          padding: EdgeInsets.only(top: MediaQuery
+              .of(context)
+              .padding
+              .top),
           child: SizedBox(
               height: 60,
               child: Stack(
@@ -75,12 +79,31 @@ class CommonView {
     );
   }
 
-  static Widget scrollView(Widget child) {
+  static Widget scrollView(Widget child, {bool isCenter = false}) {
+
+    Widget content;
+    if (isCenter) {
+      content = Center(child: child);
+    } else {
+      content = child;
+    }
+
     return CustomScrollView(physics: const BouncingScrollPhysics(), slivers: [
       SliverFillRemaining(
         hasScrollBody: false,
-        child: Center(child: child),
+        child:content,
       )
     ]);
+  }
+
+  static void toast(String message, {Toast? toastLength}) {
+    Fluttertoast.showToast(
+        msg: message,
+        toastLength: toastLength ?? Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.black87,
+        textColor: Colors.white,
+        fontSize: 13.0);
   }
 }

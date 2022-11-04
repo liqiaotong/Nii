@@ -1,9 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-import '../common/AColors.dart';
-import '../widget/CommonView.dart';
-import 'Login.dart';
+import '../../common/AColors.dart';
+import '../../widget/CommonView.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});

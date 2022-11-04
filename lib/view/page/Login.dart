@@ -1,26 +1,28 @@
+import 'package:Nii/view/base/BaseView.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-import '../common/AColors.dart';
-import '../utils/PageRouter.dart';
-import '../widget/CommonView.dart';
+import '../../common/AColors.dart';
+import '../../utils/PageRouter.dart';
+import '../../widget/CommonView.dart';
+import '../model/LoginModel.dart';
+import 'Home.dart';
 import 'Register.dart';
 
-class Login extends StatefulWidget {
-  const Login({super.key});
+class Login extends BaseView<LoginModel> {
 
-  @override
-  State<StatefulWidget> createState() => _LoginState();
-}
-
-class _LoginState extends State {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
+  Login({super.key});
+
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(body: loginView(context));
+  void init(BuildContext context) {
+
   }
+
+  @override
+  Widget buildWidget(BuildContext context) => loginView(context);
 
   Widget loginView(BuildContext context) {
     return CommonView.scrollView(Padding(
@@ -59,24 +61,28 @@ class _LoginState extends State {
                   const SizedBox(height: 20),
                   RichText(
                       text: TextSpan(text: "Don't have an account?", style: const TextStyle(color: Colors.black, fontSize: 15), children: <TextSpan>[
-                    TextSpan(
-                        text: " Sign up ",
-                        style: TextStyle(color: AColors.c487d6b, fontWeight: FontWeight.bold, fontSize: 15, decoration: TextDecoration.underline),
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () {
-                            _register();
-                          })
-                  ]))
+                        TextSpan(
+                            text: " Sign up ",
+                            style: TextStyle(color: AColors.c487d6b, fontWeight: FontWeight.bold, fontSize: 15, decoration: TextDecoration.underline),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                _register();
+                              })
+                      ]))
                 ],
               ))
         ])));
   }
 
   void _login() {
-    print("${emailController.text}  ${passwordController.text}");
+    //CommonView.toast("${emailController.text}  ${passwordController.text}");
+    Navigator.of(context!).push(PageRouter.createRoute(Home()));
   }
 
   void _register() {
-    Navigator.of(context!).push(PageRouter.createRoute(const Register()));
+    Navigator.of(context!).push(PageRouter.createRoute(Register()));
   }
+
+
+
 }
