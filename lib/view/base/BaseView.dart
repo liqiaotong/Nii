@@ -1,77 +1,85 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'BaseViewModel.dart';
 
-abstract class BaseView<ViewModel extends BaseViewMode> extends StatefulWidget {
-
+abstract class BaseView<ViewModel extends BaseViewModel> extends StatefulWidget {
   BuildContext? context;
 
-  final ViewModel? viewModel;
+  ViewModel? viewModel;
 
-  BaseView({super.key, this.viewModel});
+  StateControl? stateControl;
+
+  BaseView({super.key}) {
+    viewModel = initViewModel();
+    stateControl = StateControl(this, viewModel);
+  }
 
   @override
   State<StatefulWidget> createState() {
-    return _BaseState(_StateImpl(this, viewModel));
+    return _BaseState(stateControl);
   }
 
-  void init(BuildContext context);
+  Widget createConsumer(Function(BuildContext context, ViewModel value, Widget? child) builder) {
+    if (viewModel != null) {
+      return Consumer<BaseViewModel?>(builder: (context, model, child) {
+        return builder(context, model as ViewModel, child);
+      });
+    }
+    return Container();
+  }
+
+  ViewModel? initViewModel();
+
+  void init();
 
   Widget buildWidget(BuildContext context);
-}
 
-class _StateImpl extends StateImpl {
-  final BaseView _baseView;
-  final BaseViewMode? _baseViewMode;
-
-  _StateImpl(this._baseView, this._baseViewMode);
-
-  @override
-  void dispose() {
-    _baseViewMode?.dispose();
-  }
-
-  @override
-  void initState(BuildContext context) {
-    _baseView.context = context;
-    _baseView.init(context);
-    _baseViewMode?.init();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return _baseView.buildWidget(context);
-  }
+  void destroy();
 }
 
 class _BaseState extends State {
-  final StateImpl _stateImpl;
+  StateControl? stateControl;
 
-  _BaseState(this._stateImpl);
+  _BaseState(this.stateControl);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: _stateImpl.build(context));
+    return ChangeNotifierProvider.value(value: stateControl?.baseViewMode, child: Scaffold(body: stateControl?.build(context)));
   }
 
   @override
   void initState() {
     super.initState();
-    _stateImpl.initState(context);
+    stateControl?.initState(context);
   }
 
   @override
   void dispose() {
     super.dispose();
-    _stateImpl.dispose();
+    stateControl?.dispose();
   }
 }
 
-abstract class StateImpl {
-  void initState(BuildContext context);
+class StateControl {
+  BaseView baseView;
+  BaseViewModel? baseViewMode;
 
-  Widget build(BuildContext context);
+  StateControl(this.baseView, this.baseViewMode);
 
-  void dispose();
+  void dispose() {
+    baseView.destroy();
+    baseViewMode?.destroy();
+  }
+
+  void initState(BuildContext context) {
+    baseView.context = context;
+    baseViewMode?.context = context;
+    baseView.init();
+    baseViewMode?.init();
+  }
+
+  Widget build(BuildContext context) {
+    return baseView.buildWidget(context);
+  }
 }

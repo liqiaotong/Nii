@@ -4,7 +4,6 @@ import 'view/page/Startup.dart';
 
 void main() {
   runApp(const MyApp());
-
 }
 
 class MyApp extends StatelessWidget {

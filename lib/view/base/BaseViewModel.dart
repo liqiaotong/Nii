@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 
-abstract class BaseViewMode {
+abstract class BaseViewModel extends ChangeNotifier {
+
+  BuildContext? context;
+
   void init();
-  void dispose();
+
+  void destroy();
+
 }
+

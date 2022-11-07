@@ -1,25 +1,31 @@
+
 import 'package:Nii/view/base/BaseView.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../common/AColors.dart';
 import '../../utils/PageRouter.dart';
 import '../../widget/CommonView.dart';
 import '../model/LoginModel.dart';
-import 'Home.dart';
 import 'Register.dart';
 
 class Login extends BaseView<LoginModel> {
-
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
   Login({super.key});
 
   @override
-  void init(BuildContext context) {
-
+  LoginModel? initViewModel() {
+    return LoginModel();
   }
+
+  @override
+  void init() {}
+
+  @override
+  void destroy() {}
 
   @override
   Widget buildWidget(BuildContext context) => loginView(context);
@@ -61,28 +67,25 @@ class Login extends BaseView<LoginModel> {
                   const SizedBox(height: 20),
                   RichText(
                       text: TextSpan(text: "Don't have an account?", style: const TextStyle(color: Colors.black, fontSize: 15), children: <TextSpan>[
-                        TextSpan(
-                            text: " Sign up ",
-                            style: TextStyle(color: AColors.c487d6b, fontWeight: FontWeight.bold, fontSize: 15, decoration: TextDecoration.underline),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                _register();
-                              })
-                      ]))
+                    TextSpan(
+                        text: " Sign up ",
+                        style: TextStyle(color: AColors.c487d6b, fontWeight: FontWeight.bold, fontSize: 15, decoration: TextDecoration.underline),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            _register();
+                          })
+                  ]))
                 ],
               ))
         ])));
   }
 
   void _login() {
-    //CommonView.toast("${emailController.text}  ${passwordController.text}");
-    Navigator.of(context!).push(PageRouter.createRoute(Home()));
+    viewModel?.login(emailController.text, passwordController.text);
   }
 
   void _register() {
-    Navigator.of(context!).push(PageRouter.createRoute(Register()));
+    Navigator.of(context!).push(PageRouter.createRoute(const Register()));
   }
-
-
 
 }

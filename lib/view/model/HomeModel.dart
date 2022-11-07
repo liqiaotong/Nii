@@ -1,17 +1,22 @@
-import 'package:flutter/cupertino.dart';
 
 import '../base/BaseViewModel.dart';
 
-class HomeModel extends BaseViewMode {
+class HomeModel extends BaseViewModel{
 
-  @override
-  void dispose() {
-    // TODO: implement dispose
-  }
+  int i = 0;
 
   @override
   void init() {
-    // TODO: implement init
+
   }
+
+  @override
+  void destroy() {}
+
+  void add(){
+    i = i+1;
+    notifyListeners();
+  }
+
 
 }
