@@ -1,7 +1,11 @@
-import 'package:Nii/view/base/BaseViewModel.dart';
-import 'package:Nii/view/model/HomeModel.dart';
-import 'package:Nii/widget/CommonView.dart';
+
+import 'package:nii/utils/PageRouter.dart';
+import 'package:nii/view/model/CommonModel.dart';
+import 'package:nii/view/model/HomeModel.dart';
+import 'package:nii/view/page/Setting.dart';
+import 'package:nii/widget/CommonView.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 
 import '../base/BaseView.dart';
 
@@ -15,8 +19,11 @@ class Home extends BaseView<HomeModel> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            createConsumer((context, value, child) => Text('Total price:${value.i}')),
-            CommonView.button("test", () => {viewModel?.add()})
+            currentConsumer((context, model) => Text('Total price:${model?.i}')),
+            createConsumer<CommonModel>((context, model) => Text('Total cs price:${model?.i}')),
+            CommonView.button("test", () => {viewModel?.add()}),
+            CommonView.button("test common", () => {context.read<CommonModel>().add()}),
+            CommonView.button("turn", () => {Navigator.of(context).push(PageRouter.createRoute(Setting()))})
           ],
         ),
         isCenter: true);
@@ -26,13 +33,10 @@ class Home extends BaseView<HomeModel> {
   void init() {}
 
   @override
+  void destroy() {}
+
+  @override
   HomeModel? initViewModel() {
     return HomeModel();
   }
-
-  @override
-  void destroy() {}
-
-
-
 }

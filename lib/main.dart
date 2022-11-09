@@ -1,9 +1,13 @@
+
 import 'package:flutter/material.dart';
+import 'package:nii/view/model/CommonModel.dart';
+import 'package:provider/provider.dart';
+import 'package:provider/single_child_widget.dart';
 
 import 'view/page/Startup.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MultiProvider(providers: ModelManager.commonModels, child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -29,4 +33,8 @@ class MyApp extends StatelessWidget {
       home: Startup(),
     );
   }
+}
+
+class ModelManager {
+  static List<SingleChildWidget> commonModels = [ChangeNotifierProvider(create: (_) => CommonModel())];
 }

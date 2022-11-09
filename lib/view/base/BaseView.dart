@@ -20,13 +20,16 @@ abstract class BaseView<ViewModel extends BaseViewModel> extends StatefulWidget 
     return _BaseState(stateControl);
   }
 
-  Widget createConsumer(Function(BuildContext context, ViewModel value, Widget? child) builder) {
-    if (viewModel != null) {
-      return Consumer<BaseViewModel?>(builder: (context, model, child) {
-        return builder(context, model as ViewModel, child);
-      });
-    }
-    return Container();
+  Widget currentConsumer(Function(BuildContext context, ViewModel? model) builder) {
+    return Consumer<BaseViewModel?>(builder: (context, model, child) {
+      return builder(context, model as ViewModel?);
+    });
+  }
+
+  Widget createConsumer<VM extends BaseViewModel>(Function(BuildContext context, VM? model) builder) {
+    return Consumer<VM>(builder: (context, model, child) {
+      return builder(context, model);
+    });
   }
 
   ViewModel? initViewModel();
@@ -39,29 +42,36 @@ abstract class BaseView<ViewModel extends BaseViewModel> extends StatefulWidget 
 }
 
 class _BaseState extends State {
-  StateControl? stateControl;
 
-  _BaseState(this.stateControl);
+  final StateControl? _stateControl;
+
+  _BaseState(this._stateControl);
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider.value(value: stateControl?.baseViewMode, child: Scaffold(body: stateControl?.build(context)));
+    var body = Scaffold(body: _stateControl?.build(context));
+    if (_stateControl?.baseViewMode != null) {
+      return ChangeNotifierProvider.value(value: _stateControl?.baseViewMode, child: body);
+    } else {
+      return body;
+    }
   }
 
   @override
   void initState() {
     super.initState();
-    stateControl?.initState(context);
+    _stateControl?.initState(context);
   }
 
   @override
   void dispose() {
     super.dispose();
-    stateControl?.dispose();
+    _stateControl?.dispose();
   }
 }
 
 class StateControl {
+
   BaseView baseView;
   BaseViewModel? baseViewMode;
 
@@ -69,14 +79,12 @@ class StateControl {
 
   void dispose() {
     baseView.destroy();
-    baseViewMode?.destroy();
   }
 
   void initState(BuildContext context) {
     baseView.context = context;
     baseViewMode?.context = context;
     baseView.init();
-    baseViewMode?.init();
   }
 
   Widget build(BuildContext context) {

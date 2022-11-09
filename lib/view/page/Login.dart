@@ -1,8 +1,8 @@
 
-import 'package:Nii/view/base/BaseView.dart';
+import 'package:nii/view/base/BaseView.dart';
+import 'package:nii/view/base/BaseViewModel.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../../common/AColors.dart';
 import '../../utils/PageRouter.dart';
@@ -15,11 +15,6 @@ class Login extends BaseView<LoginModel> {
   TextEditingController passwordController = TextEditingController();
 
   Login({super.key});
-
-  @override
-  LoginModel? initViewModel() {
-    return LoginModel();
-  }
 
   @override
   void init() {}
@@ -87,5 +82,12 @@ class Login extends BaseView<LoginModel> {
   void _register() {
     Navigator.of(context!).push(PageRouter.createRoute(const Register()));
   }
+
+  @override
+  LoginModel? initViewModel() {
+    return LoginModel();
+  }
+
+
 
 }

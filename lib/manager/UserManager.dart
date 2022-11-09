@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:Nii/utils/ASharedPreferences.dart';
+import 'package:nii/utils/ASharedPreferences.dart';
 
 import '../entity/User.dart';
 

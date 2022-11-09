@@ -1,25 +1,31 @@
 import 'dart:async';
 
-import 'package:Nii/view/base/BaseView.dart';
 import 'package:flutter/material.dart';
 import '../../common/Config.dart';
 import '../../manager/UserManager.dart';
 import '../../utils/PageRouter.dart';
 import '../../widget/CommonView.dart';
-import '../base/BaseViewModel.dart';
 import 'Home.dart';
 import 'Login.dart';
 
-class Startup extends BaseView {
-  Startup({super.key});
+class Startup extends StatefulWidget {
+  const Startup({super.key});
 
   @override
-  void init() {
-    _startup();
+  State<StatefulWidget> createState() => _StartupState();
+}
+
+class _StartupState extends State {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(body: startupView()) ;
   }
 
   @override
-  Widget buildWidget(BuildContext context) => startupView();
+  void initState() {
+    super.initState();
+    _startup();
+  }
 
   Widget startupView() {
     return Center(
@@ -57,12 +63,4 @@ class Startup extends BaseView {
       timeout();
     });
   }
-
-  @override
-  BaseViewModel? initViewModel() {
-    return null;
-  }
-
-  @override
-  void destroy() {}
 }

@@ -4,9 +4,5 @@ abstract class BaseViewModel extends ChangeNotifier {
 
   BuildContext? context;
 
-  void init();
-
-  void destroy();
-
 }
 
